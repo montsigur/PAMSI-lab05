@@ -1,6 +1,6 @@
 #include "graf.hpp"
 
-wierzcholek::wierzcholek(string dane0) { dane = dane0; }
+wierzcholek::wierzcholek(string etykieta) { wierzcholek::etykieta = etykieta; }
 
 krawedz::krawedz(wierzcholek* u, wierzcholek* v, int w) { w1 = u; w2 = v; waga = w; }
 
@@ -37,19 +37,28 @@ void graf::dodajKrawedz(krawedz* k) {
 bool graf::czySasiaduja(wierzcholek* u, wierzcholek* v) {
 
   for (unsigned int i=0; i<krawedzie.size(); i++)
-    if ((krawedzie[i]->w1 == u and krawedzie[i]->w2 == v) or
-	(krawedzie[i]->w1 == v and krawedzie[i]->w2 == u))
+    if ((krawedzie[i]->w1 == u and krawedzie[i]->w2 == v))
       return true;
 
   return false;
 
 }
 
+int graf::wagaKrawedzi(wierzcholek* u, wierzcholek* v) {
+
+  for (unsigned int i=0; i<krawedzie.size(); i++)
+    if ((krawedzie[i]->w1 == u and krawedzie[i]->w2 == v))
+      return krawedzie[i]->waga;
+
+  return 0;
+  
+}
+
 void graf::wyswietlKrawedzie() {
 
   for (unsigned int i=0; i<krawedzie.size(); i++)
-    cout << krawedzie[i]->w1->dane << ", "
-	 << krawedzie[i]->w2->dane << ": "
+    cout << krawedzie[i]->w1->etykieta << ", "
+	 << krawedzie[i]->w2->etykieta << ": "
 	 << krawedzie[i]->waga << endl;
 
 }
@@ -57,6 +66,10 @@ void graf::wyswietlKrawedzie() {
 void graf::wyswietlWierzcholki() {
 
   for (unsigned int i=0; i<wierzcholki.size(); i++)
-    cout << wierzcholki[i]->dane << endl;
+    cout << wierzcholki[i]->etykieta << endl;
 
 }
+
+void graf::wyczysc() { wierzcholki.clear(); krawedzie.clear(); }
+
+graf::~graf() { wyczysc(); }

@@ -9,9 +9,9 @@ class wierzcholek {
 
 public:
 
-  string dane;
+  string etykieta;
 
-  wierzcholek(string dane0);
+  wierzcholek(string etykieta);
 
 };
 
@@ -28,23 +28,28 @@ public:
 
 class graf {
 
-  vector<wierzcholek*> wierzcholki;
-  vector<krawedz*> krawedzie;
-
   bool juzDodany(wierzcholek* w);
 
 public:
 
+  vector<wierzcholek*> wierzcholki;
+  vector<krawedz*> krawedzie;
+
+  ~graf();
+  
   void dodajWierzcholek(wierzcholek* w);
 
   void dodajKrawedz(krawedz* k);
 
   bool czySasiaduja(wierzcholek* u, wierzcholek* v);
 
+  int wagaKrawedzi(wierzcholek* u, wierzcholek* v);
+
   void wyswietlKrawedzie();
 
   void wyswietlWierzcholki();
 
+  void wyczysc();
 };
 
 #endif
