@@ -1,65 +1,13 @@
 #include "graf.hpp"
-
-wierzcholek::wierzcholek(string etykieta) { wierzcholek::etykieta = etykieta; }
-
-krawedz::krawedz(wierzcholek* u, wierzcholek* v, int w) { w1 = u; w2 = v; waga = w; }
+using namespace std;
 
 bool graf::juzDodany(wierzcholek* w) {
 
-  for (unsigned int i=0; i<wierzcholki.size(); i++)
-    if (wierzcholki[i] == w)
-      return true;
+  if (w->indeks < 0)
+    return false;
 
-  return false;
-
-}
-
-void graf::dodajWierzcholek(wierzcholek* w) {
-
-  if (!juzDodany(w))
-    wierzcholki.push_back(w);
-
-}
-
-void graf::dodajKrawedz(krawedz* k) {
-
-  wierzcholek *u, *v;
-  u = k->w1;
-  v = k->w2;
-
-  dodajWierzcholek(u);
-  dodajWierzcholek(v);
-  
-  krawedzie.push_back(k);
-
-}
-
-bool graf::czySasiaduja(wierzcholek* u, wierzcholek* v) {
-
-  for (unsigned int i=0; i<krawedzie.size(); i++)
-    if ((krawedzie[i]->w1 == u and krawedzie[i]->w2 == v))
-      return true;
-
-  return false;
-
-}
-
-int graf::wagaKrawedzi(wierzcholek* u, wierzcholek* v) {
-
-  for (unsigned int i=0; i<krawedzie.size(); i++)
-    if ((krawedzie[i]->w1 == u and krawedzie[i]->w2 == v))
-      return krawedzie[i]->waga;
-
-  return 0;
-  
-}
-
-void graf::wyswietlKrawedzie() {
-
-  for (unsigned int i=0; i<krawedzie.size(); i++)
-    cout << krawedzie[i]->w1->etykieta << ", "
-	 << krawedzie[i]->w2->etykieta << ": "
-	 << krawedzie[i]->waga << endl;
+  else
+    return true;
 
 }
 
@@ -70,6 +18,74 @@ void graf::wyswietlWierzcholki() {
 
 }
 
-void graf::wyczysc() { wierzcholki.clear(); krawedzie.clear(); }
+void graf::wczytajZPliku(const char* nazwa) {
 
-graf::~graf() { wyczysc(); }
+  char c;
+  vector<string> etykiety;
+  int ilosc_wierzcholkow, n = 0;
+  string bufor, bufor_int;
+  
+  ifstream plik(nazwa);
+  
+  getline(plik, bufor);
+
+  for (unsigned int i=0; i<bufor.size();) {
+
+    if ((c = bufor[i]) != ' ') {
+      etykiety.push_back(string()); n++;
+    }
+    
+    else i++;
+    
+    while (i < bufor.size() and (c = bufor[i++]) != ' ')
+      etykiety[n-1] += c;
+  }
+
+  ilosc_wierzcholkow = n;
+    
+  for (int i = 0; i<ilosc_wierzcholkow; i++)
+    dodajWierzcholek(new wierzcholek(etykiety[i]));
+
+  int* wagi = new int[ilosc_wierzcholkow];
+  
+  for (int i = 0; i<ilosc_wierzcholkow; i++) {
+
+    bufor.clear();
+    getline(plik, bufor);
+    n = 0;
+    
+    for (unsigned int j=0; j<bufor.size();) {
+      
+      if (bufor[j] - '0' > 0 and bufor[j] - '9' <= 0
+	  and n < ilosc_wierzcholkow) {
+      
+	while (j < bufor.size() and (c = bufor[j++]) - '0' >= 0
+	       and c - '9' <= 0)
+	  bufor_int += c;
+
+	wagi[n++] = stoi(bufor_int);
+	bufor_int.clear();
+	
+      }
+
+      else if (bufor[j] - '0' == 0 and n < ilosc_wierzcholkow) {
+	wagi[n++] = 0; j++;
+      }
+	
+      else j++;
+    }
+
+    for (int j=0; j<ilosc_wierzcholkow; j++)
+      if (wagi[j] > 0)
+	dodajKrawedz(new krawedz(wierzcholki[i], wierzcholki[j], wagi[j]));
+  }
+
+  plik.close();
+}
+
+void graf::wyczysc() {
+
+  wierzcholki.clear();
+  indeks = -1;
+
+}

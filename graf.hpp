@@ -1,55 +1,43 @@
 #ifndef GRAF_HPP
 #define GRAF_HPP
+#include "krawedz.hpp"
 #include <iostream>
+#include <fstream>
 #include <vector>
-#include <string>
 using namespace std;
-
-class wierzcholek {
-
-public:
-
-  string etykieta;
-
-  wierzcholek(string etykieta);
-
-};
-
-class krawedz {
-
-public:
-
-  wierzcholek *w1, *w2;
-  int waga;
-
-  krawedz(wierzcholek* u, wierzcholek* v, int w);
-
-};
 
 class graf {
 
+protected:
+
   bool juzDodany(wierzcholek* w);
 
-public:
-
   vector<wierzcholek*> wierzcholki;
-  vector<krawedz*> krawedzie;
-
-  ~graf();
+  int indeks;
   
-  void dodajWierzcholek(wierzcholek* w);
+public:
+  
+  ~graf() { wyczysc(); };
 
-  void dodajKrawedz(krawedz* k);
+  graf() { indeks = -1; }
+  
+  virtual void dodajWierzcholek(wierzcholek* w) = 0;
 
-  bool czySasiaduja(wierzcholek* u, wierzcholek* v);
+  virtual void dodajKrawedz(krawedz* k) = 0;
 
-  int wagaKrawedzi(wierzcholek* u, wierzcholek* v);
+  void wczytajZPliku(const char* nazwa);
 
-  void wyswietlKrawedzie();
+  virtual void zapiszDoPliku(const char* nazwa) = 0;
+  
+  virtual bool czySasiaduja(wierzcholek* u, wierzcholek* v) = 0;
+
+  virtual int wagaKrawedzi(wierzcholek* u, wierzcholek* v) = 0;
+
+  virtual void wyswietlKrawedzie() = 0;
 
   void wyswietlWierzcholki();
 
-  void wyczysc();
+  virtual void wyczysc();
 };
 
 #endif
