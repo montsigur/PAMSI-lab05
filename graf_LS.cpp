@@ -27,29 +27,25 @@ void graf_LS::dodajWierzcholek(wierzcholek* w) {
   
 void graf_LS::zapiszDoPliku(const char* nazwa) {
 
-  int* wagi = new int[wierzcholki.size()]();
   ofstream plik(nazwa);
-  int indeks;
 
   for (unsigned int i=0; i<wierzcholki.size(); i++)
     plik << wierzcholki[i]->etykieta << " ";
   plik << endl;
 
-  for (unsigned int i=0; i<wierzcholki.size(); i++) {
+  for (unsigned int i=0; i<wierzcholki.size(); i++)
     for (unsigned int j=0; j<listaSasiedztwa[i].size(); j++) {
-      if (i == listaSasiedztwa[i][j]->koniec1->indeks)
-	wagi[listaSasiedztwa[i][j]->koniec2->indeks] = listaSasiedztwa[i][j]->waga;
-      else
-	wagi[listaSasiedztwa[i][j]->koniec1->indeks] = listaSasiedztwa[i][j]->waga;	
-    }
-
-    for (unsigned int i=0; i<wierzcholki.size(); i++) {
-
-      plik << wagi[i] << " "; wagi[i] = 0;
-
-    }
-    
-    plik << endl;
+      if (i == listaSasiedztwa[i][j]->koniec1->indeks
+	  and listaSasiedztwa[i][j]->koniec2->indeks > i)
+	plik << listaSasiedztwa[i][j]->koniec1->indeks << " "
+	     << listaSasiedztwa[i][j]->koniec2->indeks << " "
+	     << listaSasiedztwa[i][j]->waga << endl;
+      
+      else if (i == listaSasiedztwa[i][j]->koniec2->indeks
+	       and listaSasiedztwa[i][j]->koniec1->indeks > i)
+	plik << listaSasiedztwa[i][j]->koniec1->indeks << " "
+	     << listaSasiedztwa[i][j]->koniec2->indeks << " "
+	     << listaSasiedztwa[i][j]->waga << endl;
   }
 
   plik.close();
@@ -81,8 +77,20 @@ int graf_LS::wagaKrawedzi(wierzcholek* u, wierzcholek* v) {
 
 void graf_LS::wyswietlKrawedzie() {
 
-  
-
+    for (unsigned int i=0; i<wierzcholki.size(); i++)
+    for (unsigned int j=0; j<listaSasiedztwa[i].size(); j++) {
+      if (i == listaSasiedztwa[i][j]->koniec1->indeks
+	  and listaSasiedztwa[i][j]->koniec2->indeks > i)
+        cout << listaSasiedztwa[i][j]->koniec1->etykieta << ", "
+	     << listaSasiedztwa[i][j]->koniec2->etykieta << ": "
+	     << listaSasiedztwa[i][j]->waga << endl;
+      
+      else if (i == listaSasiedztwa[i][j]->koniec2->indeks
+	       and listaSasiedztwa[i][j]->koniec1->indeks > i)
+        cout << listaSasiedztwa[i][j]->koniec1->etykieta << ", "
+	     << listaSasiedztwa[i][j]->koniec2->etykieta << ": "
+	     << listaSasiedztwa[i][j]->waga << endl;
+  }
 }
 
 void graf_LS::wyczysc() {

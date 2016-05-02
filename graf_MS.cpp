@@ -37,15 +37,12 @@ void graf_MS::zapiszDoPliku(const char* nazwa) {
 
   plik << endl;
 
-  for (unsigned int i=0; i<macierzSasiedztwa.size(); i++) {
-    for (unsigned int j=0; j<macierzSasiedztwa.size(); j++)
+  for (unsigned int i=0; i<macierzSasiedztwa.size()-1; i++)
+    for (unsigned int j=i+1; j<macierzSasiedztwa.size(); j++)
       if (macierzSasiedztwa[i][j] != NULL)
-	plik << macierzSasiedztwa[i][j]->waga << " ";
-      else
-	plik << "0 ";
-
-    plik << endl;
-  }	
+	plik << macierzSasiedztwa[i][j]->koniec1->indeks << " "
+	     << macierzSasiedztwa[i][j]->koniec2->indeks << " "
+	     << macierzSasiedztwa[i][j]->waga << endl;
   
   plik.close();
   

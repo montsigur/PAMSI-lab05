@@ -27,22 +27,16 @@ void graf_LK::dodajKrawedz(krawedz* k) {
 void graf_LK::zapiszDoPliku(const char* nazwa) {
 
   ofstream plik(nazwa);
-  int waga;
   
   for (unsigned int i=0; i<wierzcholki.size(); i++)
     plik << wierzcholki[i]->etykieta << " ";
 
   plik << endl;
 
-  for (unsigned int i=0; i<wierzcholki.size(); i++) {
-    for (unsigned int j=0; j<wierzcholki.size(); j++)
-      if ((waga = wagaKrawedzi(wierzcholki[i], wierzcholki[j])) > 0)
-	plik << waga << " ";
-      else
-	plik << 0 << " ";
-
-    plik << endl;
-  }	
+  for (unsigned int i=0; i<krawedzie.size(); i++)
+    plik << krawedzie[i]->koniec1->indeks << " "
+	 << krawedzie[i]->koniec2->indeks << " "
+	 << krawedzie[i]->waga << endl;
   
   plik.close();
   

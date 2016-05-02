@@ -21,8 +21,8 @@ void graf::wyswietlWierzcholki() {
 void graf::wczytajZPliku(const char* nazwa) {
 
   char c;
-  vector<string> etykiety;
-  int ilosc_wierzcholkow, n = 0;
+  vector<string> etykiety, linia;
+  int ilosc_wierzcholkow, n = 0, indeks_u, indeks_v, waga;
   string bufor, bufor_int;
   
   ifstream plik(nazwa);
@@ -43,41 +43,37 @@ void graf::wczytajZPliku(const char* nazwa) {
 
   ilosc_wierzcholkow = n;
     
-  for (int i = 0; i<ilosc_wierzcholkow; i++)
+  for (unsigned int i = 0; i<ilosc_wierzcholkow; i++)
     dodajWierzcholek(new wierzcholek(etykiety[i]));
-
-  int* wagi = new int[ilosc_wierzcholkow];
   
-  for (int i = 0; i<ilosc_wierzcholkow; i++) {
+  while (bufor != string("")) {
 
     bufor.clear();
+    linia.clear();
     getline(plik, bufor);
     n = 0;
-    
+
     for (unsigned int j=0; j<bufor.size();) {
       
-      if (bufor[j] - '0' > 0 and bufor[j] - '9' <= 0
-	  and n < ilosc_wierzcholkow) {
+      if ((c = bufor[j]) != ' ') {
+	linia.push_back(string()); n++;
+      }
       
-	while (j < bufor.size() and (c = bufor[j++]) - '0' >= 0
-	       and c - '9' <= 0)
-	  bufor_int += c;
-
-	wagi[n++] = stoi(bufor_int);
-	bufor_int.clear();
-	
-      }
-
-      else if (bufor[j] - '0' == 0 and n < ilosc_wierzcholkow) {
-	wagi[n++] = 0; j++;
-      }
-	
       else j++;
+      
+      while (j < bufor.size() and (c = bufor[j++]) != ' ')
+        linia[n-1] += c;
     }
 
-    for (int j=0; j<ilosc_wierzcholkow; j++)
-      if (wagi[j] > 0)
-	dodajKrawedz(new krawedz(wierzcholki[i], wierzcholki[j], wagi[j]));
+    if (linia.size() > 2) {
+
+      indeks_u = stoi(linia[0]);
+      indeks_v = stoi(linia[1]);
+      waga = stoi(linia[2]);
+
+      dodajKrawedz(new krawedz(wierzcholki[indeks_u], wierzcholki[indeks_v], waga));
+      
+    }
   }
 
   plik.close();
