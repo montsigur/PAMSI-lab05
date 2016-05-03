@@ -84,6 +84,15 @@ void graf_MS::wyswietlKrawedzie() {
 
 }
 
+void graf_MS::przepiszNaKopiec(kopiec &K) {
+
+  for (unsigned int i=0; i<macierzSasiedztwa.size(); i++)
+    for (unsigned int j=0; j<i; j++)
+      if (macierzSasiedztwa[i][j] != NULL)
+	K.dodaj(macierzSasiedztwa[i][j]);
+
+}
+
 void graf_MS::wyczysc() {
 
   wierzcholki.clear();

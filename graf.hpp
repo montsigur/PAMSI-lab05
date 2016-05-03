@@ -1,6 +1,7 @@
 #ifndef GRAF_HPP
 #define GRAF_HPP
 #include "krawedz.hpp"
+#include "kopiec.hpp"
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -12,12 +13,13 @@ protected:
 
   bool juzDodany(wierzcholek* w);
 
-  vector<wierzcholek*> wierzcholki;
   int indeks;
   
 public:
+
+  vector<wierzcholek*> wierzcholki;
   
-  ~graf() { wyczysc(); };
+  ~graf() { wyczysc(); }
 
   graf() { indeks = -1; }
   
@@ -34,6 +36,8 @@ public:
   virtual int wagaKrawedzi(wierzcholek* u, wierzcholek* v) = 0;
 
   virtual void wyswietlKrawedzie() = 0;
+
+  virtual void przepiszNaKopiec(kopiec &K) = 0;
 
   void wyswietlWierzcholki();
 

@@ -4,10 +4,10 @@
 using namespace std;
 
 class graf_MS: public graf {
-
-  vector< vector<krawedz*> > macierzSasiedztwa;
   
 public:
+  
+  vector< vector<krawedz*> > macierzSasiedztwa;
 
   void dodajWierzcholek(wierzcholek* w);
 
@@ -20,6 +20,8 @@ public:
   int wagaKrawedzi(wierzcholek* u, wierzcholek* v);
 
   void wyswietlKrawedzie();
+
+  void przepiszNaKopiec(kopiec &K);
 
   void wyczysc();
 

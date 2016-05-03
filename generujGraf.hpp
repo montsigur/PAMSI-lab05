@@ -22,7 +22,8 @@ int silnia(int n) {
   
 }
 
-void generujGraf(graf &G, int n_wierzcholkow, double gestosc) {
+template <typename Graf>
+void generujGraf(Graf &G, int n_wierzcholkow, double gestosc) {
 
   vector<string> permutacje, etykiety;
   vector<krawedz*> krawedzie;

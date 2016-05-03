@@ -70,6 +70,13 @@ void graf_LK::wyswietlKrawedzie() {
 	 << krawedzie[i]->waga << endl;
 }
 
+void graf_LK::przepiszNaKopiec(kopiec &K) {
+
+  for (unsigned int i=0; i<krawedzie.size(); i++)
+    K.dodaj(krawedzie[i]);
+
+}
+
 void graf_LK::wyczysc() {
 
   wierzcholki.clear();
