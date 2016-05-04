@@ -23,6 +23,8 @@ public:
 
   void przepiszNaKopiec(kopiec &K);
 
+  void przepiszIncydentneNaKopiec(wierzcholek* w, kopiec &K);
+
   void wyczysc();
 
 };

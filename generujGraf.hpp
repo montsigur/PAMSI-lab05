@@ -31,9 +31,8 @@ void generujGraf(Graf &G, int n_wierzcholkow, double gestosc) {
   
   string znaki = string("ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ");
   string uzyte_znaki;
-  int n_znakow = 0, n_krawedzi = 0, indeks;
+  int n_znakow = 0, indeks, nty;
   int n_max_krawedzi = n_wierzcholkow * (n_wierzcholkow - 1) / 2;
-  bool* tablica_kontrolna = new bool[n_max_krawedzi]();
   
   srand(time(NULL));
 
@@ -57,38 +56,26 @@ void generujGraf(Graf &G, int n_wierzcholkow, double gestosc) {
       krawedzie.push_back(new krawedz(wierzcholki[i], wierzcholki[j], rand() % 100 + 1));
   
   if (gestosc > 0.5 and gestosc < 1) {
+
+    nty = 1 / (1-gestosc);
     
-    while (n_krawedzi < (1 - gestosc) * n_max_krawedzi)
-      if (!tablica_kontrolna[(indeks = rand() % n_max_krawedzi)]) {
-	
-	tablica_kontrolna[indeks] = true;
-	n_krawedzi++;
-	
-      }
-    
-    for (int i = 0; i < n_wierzcholkow * (n_wierzcholkow - 1) / 2; i++)
-      if (tablica_kontrolna[i] == false)
+    for (int i = 0; i < n_max_krawedzi; i++)
+      if ((i+1) % nty != 0)
 	G.dodajKrawedz(krawedzie[i]);
   }
   
   else if (gestosc > 0 and gestosc <= 0.5) {
 
-    while (n_krawedzi < gestosc * n_max_krawedzi)
-      if (!tablica_kontrolna[(indeks = rand() % n_max_krawedzi)]) {
-	
-	tablica_kontrolna[indeks] = true;
-	n_krawedzi++;
+    nty = 1 / gestosc;
 
-      }
-
-    for (int i = 0; i < n_wierzcholkow * (n_wierzcholkow - 1) / 2; i++)
-      if (tablica_kontrolna[i] == true)
+    for (int i = 0; i < n_max_krawedzi; i++)
+      if ((i+1) % nty == 0)
 	G.dodajKrawedz(krawedzie[i]);
   }
 
   else if (gestosc == 1)
     for (int i = 0; i < n_wierzcholkow * (n_wierzcholkow - 1) / 2; i++)
-	G.dodajKrawedz(krawedzie[i]);
+      G.dodajKrawedz(krawedzie[i]);
 }
 
 #endif

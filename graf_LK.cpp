@@ -77,6 +77,17 @@ void graf_LK::przepiszNaKopiec(kopiec &K) {
 
 }
 
+void graf_LK::przepiszIncydentneNaKopiec(wierzcholek* w, kopiec &K) {
+
+  krawedz* k;
+  
+  for (unsigned int i=0; i < krawedzie.size(); i++)
+    if (((k = krawedzie[i])->koniec1 == w and
+	 w->klaster != k->koniec2->klaster) or
+	(k->koniec2 == w and w->klaster != k->koniec1->klaster))
+      K.dodaj(k);
+}
+
 void graf_LK::wyczysc() {
 
   wierzcholki.clear();

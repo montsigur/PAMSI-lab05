@@ -94,6 +94,19 @@ void graf_LS::przepiszNaKopiec(kopiec &K) {
         K.dodaj(listaSasiedztwa[i][j]);
 }
 
+void graf_LS::przepiszIncydentneNaKopiec(wierzcholek* w, kopiec &K) {
+
+  int i = w->indeks;
+  krawedz* k;
+
+  for (unsigned int j=0; j < listaSasiedztwa[i].size(); j++)
+    if ((w == (k = listaSasiedztwa[i][j])->koniec1 and
+	 w->klaster != k->koniec2->klaster) or
+	(w == k->koniec2 and w->klaster != k->koniec1->klaster))
+      K.dodaj(k);
+
+}
+
 void graf_LS::wyczysc() {
 
   wierzcholki.clear();

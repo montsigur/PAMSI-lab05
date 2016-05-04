@@ -39,6 +39,8 @@ public:
 
   virtual void przepiszNaKopiec(kopiec &K) = 0;
 
+  virtual void przepiszIncydentneNaKopiec(wierzcholek* w, kopiec &K) = 0;
+
   void wyswietlWierzcholki();
 
   virtual void wyczysc();

@@ -25,9 +25,8 @@ Graf PrimJarnik(Graf G) {
     u = k->koniec1;
     v = k->koniec2;
     
-    if (u->klaster != v->klaster)
-      if (u != w and u->klaster->size() == 1)
-	
+    if (u != w and u->klaster->size() == 1)
+      
     
   }
   
