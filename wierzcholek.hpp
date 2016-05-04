@@ -12,7 +12,14 @@ public:
   int indeks;
   vector<wierzcholek*>* klaster;
 
-  wierzcholek(string e) { etykieta = e; indeks = -1; klaster = NULL; }
+  wierzcholek(string e) {
+
+    etykieta = e;
+    indeks = -1;
+    klaster = new vector<wierzcholek*>;
+    klaster->push_back(this);
+    
+  }
 };
 
 #endif

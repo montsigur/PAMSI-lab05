@@ -100,8 +100,8 @@ void graf_MS::przepiszIncydentneNaKopiec(wierzcholek* w, kopiec &K) {
 
   for (unsigned int j=0; j < macierzSasiedztwa[i].size(); j++)
     if ((k = macierzSasiedztwa[i][j]) != NULL and
-	(w == k->koniec1 and w->klaster != k->koniec2->klaster) or
-	(w == k->koniec2 and w->klaster != k->koniec1->klaster))
+	((w == k->koniec1 and w->klaster != k->koniec2->klaster) or
+	 (w == k->koniec2 and w->klaster != k->koniec1->klaster)))
       K.dodaj(k);
 
 }

@@ -4,7 +4,7 @@
 using namespace std;
 
 
-void polaczKlastry(wierzcholek* u, wierzcholek* v) {
+void polaczKlastryKruskal(wierzcholek* u, wierzcholek* v) {
 
   wierzcholek* w;
   unsigned int n;
@@ -57,14 +57,8 @@ Graf Kruskal(Graf G) {
 
   G.przepiszNaKopiec(krawedzie);
   
-  for (unsigned int i=0; i<ilosc_wierzcholkow_G; i++) {
-
-    w = G.wierzcholki[i];
-    w->klaster = new vector<wierzcholek*>;
-    w->klaster->push_back(w);
-    w->indeks = -1;
-    
-  }
+  for (unsigned int i=0; i<ilosc_wierzcholkow_G; i++)
+    G.wierzcholki[i]->indeks = -1;
   
   while (T.wierzcholki.size() < ilosc_wierzcholkow_G and !krawedzie.pusty()) {
     
@@ -75,7 +69,7 @@ Graf Kruskal(Graf G) {
     if (u->klaster != v->klaster) {
       
       T.dodajKrawedz(k);
-      polaczKlastry(u, v);
+      polaczKlastryKruskal(u, v);
 
     }
   }

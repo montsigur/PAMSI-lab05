@@ -22,9 +22,73 @@ int silnia(int n) {
   
 }
 
+
+void polaczKlastry(wierzcholek* u, wierzcholek* v) {
+
+  vector<wierzcholek*>* klaster_u = u->klaster;
+  vector<wierzcholek*>* klaster_v = v->klaster;
+  
+  (*klaster_u)[0] = NULL;
+  u->klaster = klaster_v;
+  klaster_v->push_back(u);
+  klaster_u->clear();
+  
+}
+
+template <typename Graf>
+bool czySpojny(Graf G) {
+
+  srand(time(NULL));
+  int indeks = rand() % G.wierzcholki.size();
+  kopiec krawedzie;
+  vector<wierzcholek*> wierzcholki_T;
+  vector<krawedz*> krawedzie_T;
+  wierzcholek *u, *v, *w;
+  krawedz* k;
+
+  w = G.wierzcholki[indeks];
+  G.przepiszIncydentneNaKopiec(w, krawedzie);
+  wierzcholki_T.push_back(w);
+  
+  while(wierzcholki_T.size() < G.wierzcholki.size()) {
+
+    k = krawedzie.zdejmijMinimalny();
+    u = k->koniec1;
+    v = k->koniec2;
+ 
+    if (u != w and u->klaster->size() == 1) {
+      
+      wierzcholki_T.push_back(u);
+      polaczKlastry(u, v);
+      G.przepiszIncydentneNaKopiec(u, krawedzie);
+      krawedzie_T.push_back(k);
+
+    }
+
+    else if (v != w and v->klaster->size() == 1) {
+      
+      wierzcholki_T.push_back(v);
+      polaczKlastry(v, u);
+      G.przepiszIncydentneNaKopiec(v, krawedzie);
+      krawedzie_T.push_back(k);
+      
+    }
+  }
+
+  for (int i=0; i<G.wierzcholki.size(); i++)
+    G.wierzcholki[i]->indeks = i;
+
+  if (krawedzie_T.size() < G.wierzcholki.size()-1)
+    return false;
+
+  else return true;
+}
+
 template <typename Graf>
 void generujGraf(Graf &G, int n_wierzcholkow, double gestosc) {
 
+  G.wyczysc();
+  
   vector<string> permutacje, etykiety;
   vector<krawedz*> krawedzie;
   vector<wierzcholek*> wierzcholki;
