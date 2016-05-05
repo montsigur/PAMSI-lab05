@@ -1,3 +1,6 @@
+// Wojciech Michałowski
+// nr albumu 218705
+
 #ifndef GRAF_MS_HPP
 #define GRAF_MS_HPP
 #include "graf.hpp"

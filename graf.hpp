@@ -1,3 +1,6 @@
+// Wojciech Michałowski
+// nr albumu 218705
+
 #ifndef GRAF_HPP
 #define GRAF_HPP
 #include "krawedz.hpp"

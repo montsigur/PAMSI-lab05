@@ -1,3 +1,6 @@
+// Wojciech Michałowski
+// nr albumu 218705
+
 #include "kopiec.hpp"
 using namespace std;
 

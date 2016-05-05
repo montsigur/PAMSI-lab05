@@ -1,3 +1,6 @@
+// Wojciech Michałowski
+// nr albumu 218705
+
 #ifndef KRUSKAL_HPP
 #define KRUSKAL_HPP
 #include "graf.hpp"

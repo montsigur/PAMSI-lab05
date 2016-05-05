@@ -1,3 +1,6 @@
+// Wojciech Michałowski
+// nr albumu 218705
+
 #ifndef PRIMJARNIK_HPP
 #define PRIMJARNIK_HPP
 #include "graf.hpp"

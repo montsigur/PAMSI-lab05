@@ -10,13 +10,10 @@
 #include "./timer/src/Timer.h"
 using namespace std;
 
-int main(int argc, char** argv) {
+int main() {
 
   string nazwa_pliku;
-  char buffer[30];
-  graf_MS G_MS, T_MS;
-  graf_LS G_LS, T_LS;
-  graf_LK G_LK, T_LK;
+  char buffer[40];
   Timer timer;
   
   for (double gestosc : {0.25, 0.5, 0.75, 1.0}) {
@@ -37,74 +34,88 @@ int main(int argc, char** argv) {
     
     for (int n_wierzcholkow : {10, 50, 100, 500, 1000}) {
 
-      // int n_wierzcholkow = stoi(string(argv[1]));
-      // double gestosc = stod(string(argv[2]));
-
-      // sprintf(buffer, "./grafy/graf_MS_%d_%3.1f%%.txt",
-      // 	      n_wierzcholkow, gestosc_procent);
-      // nazwa_pliku = string(buffer);
-      // G_MS.zapiszDoPliku(nazwa_pliku.c_str());
-
-      // sprintf(buffer, "./grafy/graf_LS_%d_%3.1f%%.txt",
-      // 	      n_wierzcholkow, gestosc_procent);
-      // nazwa_pliku = string(buffer);
-      // G_LS.zapiszDoPliku(nazwa_pliku.c_str());
-
-      // sprintf(buffer, "./grafy/graf_LK_%d_%3.1f%%.txt",
-      // 	      n_wierzcholkow, gestosc_procent);
-      // nazwa_pliku = string(buffer);
-      // G_LK.zapiszDoPliku(nazwa_pliku.c_str());
-
-      generujGraf<graf_MS>(G_MS, n_wierzcholkow, gestosc);
-      timer.start();
-      T_MS = PrimJarnik<graf_MS>(G_MS);
-      timer.stop();
-      plik_MS << timer.getElapsedTimeInMicroSec() << " ";
-
-      generujGraf<graf_MS>(G_MS, n_wierzcholkow, gestosc);
-      timer.start();
-      T_MS = Kruskal<graf_MS>(G_MS);
-      timer.stop();
-      plik_MS << timer.getElapsedTimeInMicroSec() << endl;
-
-      generujGraf<graf_LS>(G_LS, n_wierzcholkow, gestosc);
-      timer.start();
-      T_LS = PrimJarnik<graf_LS>(G_LS);
-      timer.stop();
-      plik_LS << timer.getElapsedTimeInMicroSec() << " ";
-
-      generujGraf<graf_LS>(G_LS, n_wierzcholkow, gestosc);
-      timer.start();
-      T_LS = Kruskal<graf_LS>(G_LS);
-      timer.stop();
-      plik_LS << timer.getElapsedTimeInMicroSec() << endl;
+      graf_MS G_MS, T_MS;
+      graf_LS G_LS, T_LS;
+      graf_LK G_LK, T_LK;
 
       generujGraf<graf_LK>(G_LK, n_wierzcholkow, gestosc);
+      generujGraf<graf_LS>(G_LS, n_wierzcholkow, gestosc);      
+      generujGraf<graf_MS>(G_MS, n_wierzcholkow, gestosc);
+
+      sprintf(buffer, "./grafy/graf_MS_%d_%3.1f%%.txt",
+      	      n_wierzcholkow, gestosc_procent);
+      nazwa_pliku = string(buffer);
+      G_MS.zapiszDoPliku(nazwa_pliku.c_str());
+
+      sprintf(buffer, "./grafy/graf_LS_%d_%3.1f%%.txt",
+      	      n_wierzcholkow, gestosc_procent);
+      nazwa_pliku = string(buffer);
+      G_LS.zapiszDoPliku(nazwa_pliku.c_str());
+
+      sprintf(buffer, "./grafy/graf_LK_%d_%3.1f%%.txt",
+      	      n_wierzcholkow, gestosc_procent);
+      nazwa_pliku = string(buffer);
+      G_LK.zapiszDoPliku(nazwa_pliku.c_str());
+
       timer.start();
       T_LK = PrimJarnik<graf_LK>(G_LK);
       timer.stop();
-      plik_LK << timer.getElapsedTimeInMicroSec() << " ";
+      plik_LK << timer.getElapsedTimeInMilliSec() << " ";
 
-      generujGraf<graf_LK>(G_LK, n_wierzcholkow, gestosc);
+      timer.start();
+      T_LS = PrimJarnik<graf_LS>(G_LS);
+      timer.stop();
+      plik_LS << timer.getElapsedTimeInMilliSec() << " ";
+
+      timer.start();
+      T_MS = PrimJarnik<graf_MS>(G_MS);
+      timer.stop();
+      plik_MS << timer.getElapsedTimeInMilliSec() << " ";
+    
+      sprintf(buffer, "./drzewa/MST_MS_%d_%3.1f%%.txt",
+      	      n_wierzcholkow, gestosc_procent);
+      nazwa_pliku = string(buffer);
+      T_MS.zapiszDoPliku(nazwa_pliku.c_str());
+
+      sprintf(buffer, "./drzewa/MST_LS_%d_%3.1f%%.txt",
+      	      n_wierzcholkow, gestosc_procent);
+      nazwa_pliku = string(buffer);
+      T_LS.zapiszDoPliku(nazwa_pliku.c_str());
+
+      sprintf(buffer, "./drzewa/MST_LK_%d_%3.1f%%.txt",
+      	      n_wierzcholkow, gestosc_procent);
+      nazwa_pliku = string(buffer);
+      T_LK.zapiszDoPliku(nazwa_pliku.c_str());
+
+      sprintf(buffer, "./grafy/graf_MS_%d_%3.1f%%.txt",
+      	      n_wierzcholkow, gestosc_procent);
+      nazwa_pliku = string(buffer);
+      G_MS.wczytajZPliku(nazwa_pliku.c_str());
+
+      sprintf(buffer, "./grafy/graf_LS_%d_%3.1f%%.txt",
+      	      n_wierzcholkow, gestosc_procent);
+      nazwa_pliku = string(buffer);
+      G_LS.wczytajZPliku(nazwa_pliku.c_str());
+
+      sprintf(buffer, "./grafy/graf_LK_%d_%3.1f%%.txt",
+      	      n_wierzcholkow, gestosc_procent);
+      nazwa_pliku = string(buffer);
+      G_LK.wczytajZPliku(nazwa_pliku.c_str());
+
       timer.start();
       T_LK = Kruskal<graf_LK>(G_LK);
       timer.stop();
-      plik_LK << timer.getElapsedTimeInMicroSec() << endl;
-    
-      // sprintf(buffer, "./drzewa/MST_MS_%d_%3.1f%%.txt",
-      // 	      n_wierzcholkow, gestosc_procent);
-      // nazwa_pliku = string(buffer);
-      // T_MS.zapiszDoPliku(nazwa_pliku.c_str());
+      plik_LK << timer.getElapsedTimeInMilliSec() << endl;
 
-      // sprintf(buffer, "./drzewa/MST_LS_%d_%3.1f%%.txt",
-      // 	      n_wierzcholkow, gestosc_procent);
-      // nazwa_pliku = string(buffer);
-      // T_LS.zapiszDoPliku(nazwa_pliku.c_str());
+      timer.start();
+      T_LS = Kruskal<graf_LS>(G_LS);
+      timer.stop();
+      plik_LS << timer.getElapsedTimeInMilliSec() << endl;
 
-      // sprintf(buffer, "./drzewa/MST_LK_%d_%3.1f%%.txt",
-      // 	      n_wierzcholkow, gestosc_procent);
-      // nazwa_pliku = string(buffer);
-      // T_LK.zapiszDoPliku(nazwa_pliku.c_str());
+      timer.start();
+      T_MS = Kruskal<graf_MS>(G_MS);
+      timer.stop();
+      plik_MS << timer.getElapsedTimeInMilliSec() << endl;
       
     }
 

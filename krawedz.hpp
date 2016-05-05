@@ -1,3 +1,6 @@
+// Wojciech Michałowski
+// nr albumu 218705
+
 #ifndef KRAWEDZ_HPP
 #define KRAWEDZ_HPP
 #include "wierzcholek.hpp"

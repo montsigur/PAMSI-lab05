@@ -1,3 +1,6 @@
+// Wojciech Michałowski
+// nr albumu 218705
+
 #include "graf.hpp"
 using namespace std;
 
@@ -20,6 +23,8 @@ void graf::wyswietlWierzcholki() {
 
 void graf::wczytajZPliku(const char* nazwa) {
 
+  wyczysc();
+  
   char c;
   vector<string> etykiety, linia;
   int ilosc_wierzcholkow, n = 0, indeks_u, indeks_v, waga;
